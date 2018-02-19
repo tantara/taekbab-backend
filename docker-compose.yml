@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:9.6
+    volumes:
+      - postgres:/var/lib/postgresql/data
+  app:
+    build: .
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    volumes:
+      - .:/usr/src/app
+      - bundle:/bundle
+    ports:
+      - "3333:3000"
+    depends_on:
+      - db
+
+volumes:
+  bundle:
+  postgres:
